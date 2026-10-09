@@ -1,0 +1,21 @@
+# =====================================================================
+# local.rules - Regles Snort personnalisees du projet SIEM
+# A placer dans /etc/snort/rules/local.rules
+# et a declarer dans snort.conf : include $RULE_PATH/local.rules
+# Plage de SID locaux : 1000001-1999999
+# =====================================================================
+
+# --- Scenario 1 : Scan de ports Xmas (flags FIN+PSH+URG) -------------
+alert tcp any any -> any any (msg:"LOCAL Xmas scan detecte"; flags:FPU; classtype:attempted-recon; sid:1000001; rev:1;)
+
+# --- Scenario 2 : Force brute SSH (>=5 SYN vers port 22 en 30s) ------
+alert tcp any any -> any 22 (msg:"LOCAL SSH brute force"; flow:to_server; flags:S; detection_filter:track by_src, count 5, seconds 30; classtype:attempted-admin; sid:1000002; rev:1;)
+
+# --- Scenario 3 : Scanner web / User-Agent Nikto --------------------
+alert tcp any any -> any 80 (msg:"LOCAL Nikto User-Agent"; flow:to_server,established; content:"Nikto"; nocase; classtype:web-application-attack; sid:1000003; rev:2;)
+
+# --- Scenario 4 : Anomalie ICMP (echo-request) ----------------------
+alert icmp any any -> any any (msg:"LOCAL ICMP detecte"; itype:8; classtype:bad-unknown; sid:1000004; rev:4;)
+
+# --- Scenario 5 : Injection SQL (UNION + SELECT) --------------------
+alert tcp any any -> any 80 (msg:"LOCAL SQLi UNION SELECT"; flow:to_server,established; content:"UNION"; nocase; content:"SELECT"; nocase; classtype:web-application-attack; sid:1000005; rev:2;)

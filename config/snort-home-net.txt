@@ -1,0 +1,9 @@
+# Variable HOME_NET definie dans /etc/snort/snort.conf
+# Le loopback (127.0.0.1) est inclus car les attaques de test
+# sont lancees en local contre 127.0.0.1.
+
+ipvar HOME_NET [172.26.160.0/20,127.0.0.1/32]
+ipvar EXTERNAL_NET any
+
+# Declaration des regles personnalisees (section rule-files) :
+# include $RULE_PATH/local.rules
