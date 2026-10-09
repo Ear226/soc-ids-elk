@@ -1,6 +1,6 @@
 # SIEM — Système de détection d'anomalies et de gestion de logs
 
-Projet du cours **8INF857 – Sécurité informatiqu (SIEM)**
+Projet du cours **8INF857 – Sécurité informatique (SIEM)**
 Université du Québec à Chicoutimi (UQAC) · Étudiant : **Earwin Belko Sidibe**
 
 Pipeline SIEM complet : collecte, détection, centralisation, visualisation et
